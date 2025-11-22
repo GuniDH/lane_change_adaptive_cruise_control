@@ -1,0 +1,38 @@
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+# beginning of default bytetrack.yaml
+
+#tracker_type: bytetrack # (str) Tracker backend: botsort|bytetrack; choose bytetrack for the classic baseline
+#track_high_thresh: 0.25 # (float) First-stage match threshold; raise for cleaner tracks, lower to keep more
+#track_low_thresh: 0.1 # (float) Second-stage threshold for low-score matches; balances recovery vs drift
+#new_track_thresh: 0.25 # (float) Start a new track if no match ≥ this; higher reduces false tracks
+#track_buffer: 30 # (int) Frames to keep lost tracks alive; higher handles occlusion, increases ID switches risk
+#match_thresh: 0.8 # (float) Association similarity threshold (IoU/cost); tune with detector quality
+#fuse_score: True # (bool) Fuse detection score with motion/IoU for matching; stabilizes weak detections
+
+# end of default bytetrack.yaml-
+
+#tracker_type: bytetrack
+#track_high_thresh: 0.20
+#track_low_thresh: 0.1
+#new_track_thresh: 0.75
+#track_buffer: 120
+#match_thresh: 0.55
+#fuse_score: false
+
+tracker_type: bytetrack
+track_high_thresh: 0.50   # Higher - only use confident detections for first stage
+track_low_thresh: 0.20    # Recover lower-confidence existing tracks
+new_track_thresh: 0.40    # LOWER - create tracks more easily
+track_buffer: 120          # SHORTER - don't keep dead tracks too long
+match_thresh: 0.70        # HIGHER - stricter matching (use IoU better)
+fuse_score: true          # CRITICAL - use confidence to prevent wrong matches
+
+# ADD THESE for faster ID confirmation:
+min_box_area: 10              # Minimum box area to consider (pixels²)
+mot20: False                  # Set to False for faster confirmation
+
+# These control confirmation speed (if your YOLO version supports them):
+conf_thres: 0.20              # Confirmation threshold
+n_init: 1                     # Number of consecutive frames to confirm track (LOWER = FASTER)
+max_age: 120                  # Same as track_buffer

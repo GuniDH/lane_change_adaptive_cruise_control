@@ -1,0 +1,120 @@
+carla:
+  # CARLA server connection settings
+  host: "localhost"
+  port: 2000
+  timeout: 120.0
+  map_name: "Town12"  
+
+world:
+  # World simulation settings
+  synchronous_mode: true
+  fixed_delta_seconds: 0.05  # 20 FPS simulation
+
+ego_vehicle:
+  # Ego vehicle configuration
+  blueprint: "vehicle.tesla.model3"
+  # Alternative blueprints: "vehicle.audi.a2", "vehicle.bmw.grandtourer"
+
+  # Spawn location (x, y) - finds closest spawn point to these coordinates
+  spawn_location:
+    x: -385.80
+    y: 3100.61
+
+sensors:
+  # Camera sensor configuration
+  camera:
+    image_size_x: 640
+    image_size_y: 360
+    fov: 120  # Field of view in degrees
+    location:
+      x: -1.2
+      y: 0.0
+      z: 2.0
+    rotation:
+      pitch: -5
+      yaw: 0
+      roll: 0
+
+  # LiDAR sensor configuration
+  lidar:
+    channels: 64
+    range: 110  # meters
+    points_per_second: 1560000
+    rotation_frequency: 20  # Hz
+    horizontal_fov: 120  # degrees
+    upper_fov: 40  # degrees
+    lower_fov: -30  # degrees
+    sensor_tick: 0.05  # seconds
+    location:
+      x: -1.0
+      y: 0.0
+      z: 2.5
+
+  # Radar sensor configuration
+  radar:
+    horizontal_fov: 150  # degrees
+    vertical_fov: 90  # degrees
+    range: 70  # meters
+    points_per_second: 560000
+    sensor_tick: 0.05  # seconds
+    location:
+      x: -1.0
+      y: 0.0
+      z: 2.5
+
+  # Sensor failover configuration
+  failover:
+    enabled: true                      # Enable/disable failover system
+    timeout_frames: 5                  # Frames without data before failover
+    validation:
+      check_empty: true                # Validate for None/empty data
+      check_nan: true                  # Validate for NaN/inf values (radar: NaN only)
+      consecutive_failures: 5          # Consecutive validation failures before failover
+
+# Perception configuration
+perception:
+  # Traffic light classifier settings
+  traffic_light_classifier:
+    image_size: 64  
+
+traffic:
+  # NPC traffic settings
+  num_vehicles: 20                        # Number of NPC vehicles to spawn
+  num_pedestrians: 0                         # Number of pedestrians 
+  traffic_manager_port: 8000                 # Traffic Manager port
+  global_distance_to_leading_vehicle: 2.5   # Following distance in meters
+  global_speed_difference: 0.0              # Speed variation percentage (0 = all same speed)
+
+gateway:
+  # Gateway maneuver tolerance settings
+  maneuver_tolerance:
+    lane_threshold: 0.1  # Tolerance for lane detection (lanes are integers, so 0.1 is enough)
+    speed_threshold: 3.0  # Speed tolerance in km/h
+
+# Open-world multi-client server configuration
+server:
+  num_initial_clients: 1              # Number of clients to wait for before starting
+  registration_timeout: 60            # Seconds to wait for clients (waiting phase)
+  zeromq_rep_port: 5555              # Port for state queries (REQ-REP)
+  zeromq_pub_port: 5556              # Port for event broadcasting (PUB-SUB)
+
+  # Hybrid physics configuration (for open-world mode)
+  hybrid_physics:
+    enabled: true
+    radius: 70.0                     # Meters around each ego vehicle
+
+  # Global traffic spawning (for open-world mode)
+  global_traffic:
+    num_vehicles: 10                # Number of traffic vehicles to spawn
+    autopilot_speed_variation: 0.0  # Speed variation percentage
+
+# Ego client configuration (for open-world mode)
+client:
+  server_host: "localhost"           # Server host address
+  server_rep_port: 5555              # Server REQ-REP port
+  server_pub_port: 5556              # Server PUB-SUB port
+  # Note: client_id is auto-assigned by server based on connection order
+
+# Logging configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR

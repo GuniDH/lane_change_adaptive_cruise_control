@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: lane_change
+Version: 0.1.0
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: scipy>=1.7.0
+Requires-Dist: scikit-learn>=1.0.0
+Requires-Dist: opencv-python>=4.5.0
+Requires-Dist: torch>=2.0.0
+Requires-Dist: torchvision>=0.15.0
+Requires-Dist: ultralytics>=8.0.0
+Requires-Dist: shapely>=2.0.0
+Provides-Extra: gpu
+Dynamic: provides-extra
+Dynamic: requires-dist
